@@ -1,0 +1,1563 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integral Data Talks 2025 - Professional AI Assistant</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #FF8C00 0%, #FF6B00 100%);
+            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+
+            --bg-primary: #2D2D2D;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+
+            --border-light: #e2e8f0;
+            --border-medium: #cbd5e1;
+
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+
+            --radius-sm: 6px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 18px;
+            --radius-2xl: 24px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-feature-settings: 'cv11', 'ss01';
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 1000px;
+            height: 90vh;
+            min-height: 650px;
+            background: var(--bg-primary);
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-xl);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Professional Header */
+        .header {
+            background: var(--primary-gradient);
+            padding: 32px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: headerShimmer 8s ease-in-out infinite;
+        }
+
+        @keyframes headerShimmer {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand-logo {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .brand-info h1 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            margin-bottom: 4px;
+        }
+
+        .brand-info p {
+            opacity: 0.9;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .end-session-btn {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: white;
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            display: none;
+            outline: none;
+        }
+
+        .end-session-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .end-session-btn.visible {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 8px;
+        }
+
+        .lang-btn {
+            width: 42px;
+            height: 34px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            outline: none;
+        }
+
+        .lang-btn:hover {
+            transform: scale(1.05);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .lang-btn.active {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Professional Status Bar */
+        .status-bar {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-light);
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            flex-shrink: 0;
+        }
+
+        .status-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #22c55e;
+            position: relative;
+        }
+
+        .status-indicator::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 50%;
+            background: inherit;
+            opacity: 0.3;
+            animation: statusPulse 2s infinite;
+        }
+
+        @keyframes statusPulse {
+            0% { transform: scale(0.8); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 0.3; }
+            100% { transform: scale(0.8); opacity: 0.8; }
+        }
+
+        .status-indicator.loading { background: #f59e0b; }
+        .status-indicator.error { background: #ef4444; }
+
+        .tech-badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tech-badge {
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .badge-qwen { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; }
+        .badge-hyde { background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%); color: white; }
+        .badge-semantic { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; }
+        .badge-rerank { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; }
+
+        /* FIXED: Professional Chat Area with proper scrolling */
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-primary);
+            position: relative;
+            min-height: 0;
+            border: 2px solid #FF8C00;
+        }
+
+        .messages-area {
+            flex: 1;
+            padding: 32px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            scroll-behavior: smooth;
+            min-height: 0;
+        }
+
+        .messages-area::-webkit-scrollbar { 
+            width: 8px; 
+        }
+        .messages-area::-webkit-scrollbar-track { 
+            background: var(--bg-tertiary); 
+            border-radius: 4px;
+            margin: 8px 0;
+        }
+        .messages-area::-webkit-scrollbar-thumb { 
+            background: var(--border-medium); 
+            border-radius: 4px;
+        }
+        .messages-area::-webkit-scrollbar-thumb:hover { 
+            background: var(--text-muted); 
+        }
+
+        .message {
+            max-width: 80%;
+            animation: messageSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        @keyframes messageSlideIn {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .bot-message { align-self: flex-start; }
+        .user-message { align-self: flex-end; }
+
+        .message-content {
+            padding: 16px 20px;
+            border-radius: var(--radius-xl);
+            word-wrap: break-word;
+            white-space: pre-line;
+            font-size: 15px;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .bot-message .message-content {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border-bottom-left-radius: var(--radius-sm);
+            border: 1px solid var(--border-light);
+        }
+
+        .user-message .message-content {
+            background: var(--primary-gradient);
+            color: white;
+            border-bottom-right-radius: var(--radius-sm);
+            box-shadow: var(--shadow-md);
+        }
+
+        .message-meta {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .typing-indicator {
+            align-self: flex-start;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-xl);
+            border-bottom-left-radius: var(--radius-sm);
+            border: 1px solid var(--border-light);
+            max-width: 200px;
+            flex-shrink: 0;
+        }
+
+        .typing-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--text-muted);
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-8px); }
+        }
+
+        /* Professional User Card */
+        .user-card {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 2px solid #0ea5e9;
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin: 16px 0;
+            animation: cardSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-shrink: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        @keyframes cardSlideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .user-card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            box-shadow: var(--shadow-md);
+            flex-shrink: 0;
+        }
+
+        .user-info h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .user-info p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .user-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .detail-value {
+            font-size: 14px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .confirmation-actions {
+            display: flex;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            outline: none;
+        }
+
+        .btn-confirm {
+            background: var(--success-gradient);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-reject {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 2px solid var(--border-medium);
+        }
+
+        .btn-reject:hover {
+            border-color: var(--text-muted);
+            transform: translateY(-2px);
+        }
+
+        /* FIXED: Complete 3x2 Grid Layout for Options */
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 16px 0;
+            flex-shrink: 0;
+            max-width: 600px;
+            align-self: center;
+        }
+
+        .option-card {
+            background: var(--bg-primary);
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+            min-height: 100px;
+        }
+
+        .option-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .option-card:hover::before {
+            opacity: 1;
+        }
+
+        .option-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .option-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .option-icon {
+            font-size: 24px;
+            color: #3b82f6;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: var(--radius-md);
+            flex-shrink: 0;
+        }
+
+        .option-text {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .option-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .option-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* FIXED: End Session card styling (normal grid item) */
+        .end-session-card {
+            background: linear-gradient(135deg, #fee2e2 0%, #fef3c7 100%);
+            border-color: #f59e0b;
+        }
+
+        .end-session-card:hover {
+            border-color: #d97706;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.25);
+        }
+
+        .end-session-card .option-icon { 
+            color: #d97706;
+            background: rgba(217, 119, 6, 0.1);
+        }
+
+        /* Professional Input Area */
+        .input-area {
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-light);
+            padding: 24px 32px;
+            flex-shrink: 0;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .input-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 16px 60px 16px 20px;
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-xl);
+            font-size: 15px;
+            font-family: inherit;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            outline: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            resize: none;
+            min-height: 54px;
+            max-height: 120px;
+        }
+
+        .input-field:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        .input-actions {
+            position: absolute;
+            right: 8px;
+            bottom: 8px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .send-btn {
+            width: 38px;
+            height: 38px;
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 16px;
+            outline: none;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .app-container { height: 100vh; border-radius: 0; }
+            .header { padding: 20px; }
+            .header-content { flex-direction: column; gap: 16px; }
+            .messages-area { padding: 20px; }
+            .message { max-width: 90%; }
+            .input-area { padding: 16px; }
+
+            .options-container { 
+                grid-template-columns: 1fr;
+                max-width: 100%;
+            }
+
+            .option-card {
+                min-height: 80px;
+                padding: 14px;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden { display: none !important; }
+        .visible { display: block !important; }
+
+        .fade-in {
+            animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .scroll-to-bottom {
+            animation: scrollIndication 2s ease-in-out;
+        }
+
+        @keyframes scrollIndication {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Professional Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="brand">
+                    <div class="brand-logo">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="brand-info">
+                        <h1 id="appTitle">Integral Data Talks 2025</h1>
+                        <p>Professional AI Assistant</p>
+                    </div>
+                </div>
+
+                <div class="header-controls">
+                    <button class="end-session-btn" id="endSessionBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span id="endSessionText">End Session</span>
+                    </button>
+
+                    <div class="language-selector">
+                        <button class="lang-btn active" id="enBtn" title="English">🇬🇧</button>
+                        <button class="lang-btn" id="plBtn" title="Polski">🇵🇱</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Professional Status Bar -->
+        <div class="status-bar">
+            <div class="status-group">
+                <div class="status-item">
+                    <div class="status-indicator" id="systemStatus"></div>
+                    <span id="systemStatusText">System Online</span>
+                </div>
+                <div class="status-item">
+                    <i class="fas fa-users"></i>
+                    <span id="guestCount">5 guests</span>
+                </div>
+                <div class="status-item">
+                    <i class="fas fa-file-alt"></i>
+                    <span id="documentCount">2 documents</span>
+                </div>
+                <div class="status-item">
+                    <i class="fas fa-brain"></i>
+                    <span id="ragMethod">Advanced RAG</span>
+                </div>
+            </div>
+
+            <div class="tech-badges">
+                <div class="tech-badge badge-qwen">Qwen 2.5</div>
+                <div class="tech-badge badge-hyde">HyDE</div>
+                <div class="tech-badge badge-semantic">Semantic</div>
+                <div class="tech-badge badge-rerank">Rerank</div>
+            </div>
+        </div>
+
+        <!-- Professional Chat Container -->
+        <div class="chat-container">
+            <div class="messages-area" id="messagesArea">
+                <div class="message bot-message">
+                    <div class="message-content" id="welcomeMessage">
+                        🤖 🔶 INTEGRAL DATA TALKS 2025
+
+                        I'm powered by advanced AI technologies including:
+
+                        I can assist you with:
+                        • Event registration and badge management
+                        • Personalized agenda and schedule information
+                        • Speaker profiles and session details
+                        • Venue navigation and practical information
+
+                        To get started, please provide your email address or phone number, or ask me any question about the event.
+                    </div>
+                </div>
+            </div>
+
+            <div class="typing-indicator hidden" id="typingIndicator">
+                <span class="typing-text">AI is thinking</span>
+                <div class="typing-dots">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Professional Input Area -->
+        <div class="input-area">
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <textarea 
+                        class="input-field" 
+                        id="messageInput" 
+                        placeholder="Enter your email/phone or ask any question about the event..."
+                        rows="1"
+                    ></textarea>
+                    <div class="input-actions">
+                        <button class="send-btn" id="sendButton">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentLanguage = 'en';
+        let chatState = 'waiting_for_contact';
+        let currentUser = null;
+        let isTyping = false;
+
+        // Practical information
+        const practicalInfo = {
+            en: `📍  Venue : Browary Warszawskie - Main Hall
+ul. Grzybowska 58/60, Warsaw
+
+🚇  Metro : Line M2, station "Rondo ONZ" (5 min walk)
+🚌  Bus : Lines 102, 105, 109, 111, 178, 222
+
+🅿️  Parking : Underground parking available
+Entry from Grzybowska & Haberbuscha streets
+Rate: 5 PLN/hour
+
+🌐  Wi-Fi : EVENT_WIFI
+Password: DataTalks2025
+
+📞  Contact : awrobel@gmail2.com
+Phone: +48 666 888 777
+
+🏪  Nearby : Hala Koszyki (food court), Złote Tarasy (shopping)`,
+            pl: `📍  Miejsce : Browary Warszawskie - Hala Główna
+ul. Grzybowska 58/60, Warszawa
+
+🚇  Metro : Linia M2, stacja "Rondo ONZ" (5 min pieszo)
+🚌  Autobus : Linie 102, 105, 109, 111, 178, 222
+
+🅿️  Parking : Parking podziemny dostępny
+Wjazd od ul. Grzybowskiej i Haberbuscha
+Stawka: 5 PLN/godz
+
+🌐  Wi-Fi : EVENT_WIFI
+Hasło: DataTalks2025
+
+📞  Kontakt : awrobel@gmail2.com
+Telefon: +48 666 888 777
+
+🏪  W pobliżu : Hala Koszyki (food court), Złote Tarasy (shopping)`
+        };
+
+        const detailedAgenda = {
+            en: `📅  MONDAY, OCTOBER 21, 2025 
+
+🕰️  08:30-09:00  | Registration & Badge Pick-up
+📍 Main Hall - Browary Warszawskie
+
+✅  09:00-16:30  | Full Conference Program
+•  09:00-09:15  Welcome speech & opening
+•  09:15-10:15  Keynote: "Future of AI in Enterprise"
+•  10:15-10:55  Session 1: Data Architecture
+•  10:55-11:45  ☕ Coffee break & networking
+•  11:45-12:45  Session 2: Machine Learning Platforms  
+•  12:45-13:05  Short break
+•  13:05-13:55  🍽️ Lunch & networking
+•  13:55-14:55  Session 3: AI Ethics & Governance
+•  14:55-15:15  Break
+•  15:15-16:15  Oxford debate: "AI Regulation"
+•  16:15-16:30  Closing remarks
+
+🍸  16:30-18:00  | Cocktail Reception
+• Networking with participants & speakers
+• Prize competitions & demos
+• Expert Q&A sessions
+
+📅  TUESDAY, OCTOBER 22, 2025 
+🔧  Workshops  (Registration required)
+💡 Contact organizers: awrobel@gmail2.com`,
+            pl: `📅  PONIEDZIAŁEK, 21 PAŹDZIERNIKA 2025 
+
+🕰️  08:30-09:00  | Rejestracja i odbiór identyfikatorów  
+📍 Hala główna - Browary Warszawskie
+
+✅  09:00-16:30  | Pełny program konferencji
+•  09:00-09:15  Przemówienie powitalne
+•  09:15-10:15  Wykład główny: "Przyszłość AI w przedsiębiorstwie"
+•  10:15-10:55  Sesja 1: Architektura danych
+•  10:55-11:45  ☕ Przerwa kawowa i networking
+•  11:45-12:45  Sesja 2: Platformy ML
+•  12:45-13:05  Krótka przerwa
+•  13:05-13:55  🍽️ Lunch i networking
+•  13:55-14:55  Sesja 3: Etyka AI i zarządzanie
+•  14:55-15:15  Przerwa
+•  15:15-16:15  Debata oksfordzka: "Regulacje AI"
+•  16:15-16:30  Podsumowanie
+
+🍸  16:30-18:00  | Cocktail reception
+• Networking z uczestnikami i prelegentami
+• Konkursy z nagrodami i demo
+• Sesje Q&A z ekspertami
+
+📅  WTOREK, 22 PAŹDZIERNIKA 2025 
+🔧  Warsztaty  (wymagana rejestracja)
+💡 Kontakt: awrobel@gmail2.com`
+        };
+
+        // Translations
+        const translations = {
+            en: {
+                appTitle: "Integral Data Talks 2025",
+                welcome: `🤖 🔶 INTEGRAL DATA TALKS 2025
+
+I'm powered by advanced AI technologies including:
+• Qwen 2.5 Large Language Model
+• HyDE Document Embedding
+• Semantic Content Analysis
+• Multi-document Reranking
+
+I can assist you with:
+• Event registration and badge management
+• Personalized agenda and schedule information
+• Speaker profiles and session details
+• Venue navigation and practical information
+
+To get started, please provide your email address or phone number, or ask me any question about the event.`,
+                placeholder: "Enter your email/phone or ask any question about the event...",
+                userNotFound: "I apologize, but I couldn't locate your registration in our system. Please verify your email address or phone number and try again. Alternatively, I'm happy to answer general questions about the event.",
+                confirmDetails: "Perfect! I found your registration details in our system:",
+                confirmQuestion: "Please confirm these details are correct:",
+                yes: "Confirm", 
+                no: "Update Details",
+                detailsConfirmed: "Excellent! Your registration has been verified. How may I assist you with today's event?",
+                detailsRejected: "I understand. Please provide your correct email address or phone number for verification.",
+                optionAgenda: "Today's Agenda", 
+                optionMyPlan: "My Schedule", 
+                optionSpeakers: "Speakers & Topics",
+                optionPractical: "Venue & Logistics", 
+                optionOther: "AI Q&A Assistant",
+                optionEndSession: "End Session",
+                howCanIHelp: "How else can I assist you today?",
+                badges: "Badge Status", 
+                badgePrinted: "✅ Badge ready for collection",
+                badgeNotPrinted: "⏳ Badge pending - please visit registration",
+                mySchedule: "Your personalized event schedule:",
+                mainConference: "You are registered for the main conference track.",
+                systemReady: "System Online",
+                connecting: "Connecting...",
+                error: "Connection Error",
+                endSessionConfirm: "Thank you for using the Integral Data Talks 2025 AI Assistant. The session has been reset for the next participant.",
+                endSessionBtn: "End Session"
+            },
+            pl: {
+                appTitle: "Integral Data Talks 2025",
+                welcome: `🤖 Witamy w Profesjonalnym Asystencie AI Integral Data Talks 2025!
+
+Jestem zasilany zaawansowanymi technologiami AI:
+
+Mogę pomóc w:
+• Rejestracji wydarzeń i zarządzaniu identyfikatorami
+• Spersonalizowanej agendzie i harmonogramie
+• Informacjach o prelegentach i sesjach
+• Nawigacji w obiekcie i informacjach praktycznych
+
+Aby rozpocząć, podaj swój adres email lub numer telefonu, lub zadaj dowolne pytanie o wydarzenie.`,
+                placeholder: "Podaj email/telefon lub zadaj pytanie o wydarzenie...",
+                userNotFound: "Przepraszam, ale nie mogłem znaleźć Twojej rejestracji w naszym systemie. Sprawdź adres email lub telefon i spróbuj ponownie. Chętnie odpowiem też na ogólne pytania o wydarzenie.",
+                confirmDetails: "Doskonale! Znalazłem Twoje dane rejestracyjne w systemie:",
+                confirmQuestion: "Proszę potwierdź, czy te dane są poprawne:",
+                yes: "Potwierdź", 
+                no: "Aktualizuj Dane",
+                detailsConfirmed: "Świetnie! Twoja rejestracja została zweryfikowana. W czym mogę pomóc odnośnie dzisiejszego wydarzenia?",
+                detailsRejected: "Rozumiem. Proszę podaj prawidłowy adres email lub numer telefonu do weryfikacji.",
+                optionAgenda: "Dzisiejszy Program", 
+                optionMyPlan: "Mój Harmonogram", 
+                optionSpeakers: "Prelegenci i Tematy",
+                optionPractical: "Miejsce i Logistyka", 
+                optionOther: "Asystent AI Q&A",
+                optionEndSession: "Zakończ Sesję",
+                howCanIHelp: "W czym jeszcze mogę pomóc?",
+                badges: "Status Identyfikatora", 
+                badgePrinted: "✅ Identyfikator gotowy do odbioru",
+                badgeNotPrinted: "⏳ Identyfikator oczekuje - odwiedź rejestrację",
+                mySchedule: "Twój spersonalizowany harmonogram:",
+                mainConference: "Jesteś zarejestrowany na główną ścieżkę konferencji.",
+                systemReady: "System Online",
+                connecting: "Łączenie...",
+                error: "Błąd Połączenia",
+                endSessionConfirm: "Dziękujemy za skorzystanie z Asystenta AI Integral Data Talks 2025. Sesja została zresetowana dla następnego uczestnika.",
+                endSessionBtn: "Zakończ Sesję"
+            }
+        };
+
+        // Initialize application
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            checkSystemStatus();
+            autoResizeTextarea();
+        });
+
+        function setupEventListeners() {
+            // Language buttons
+            document.getElementById('enBtn').onclick = () => changeLanguage('en');
+            document.getElementById('plBtn').onclick = () => changeLanguage('pl');
+
+            // End session button
+            document.getElementById('endSessionBtn').onclick = endRegistration;
+
+            // Send button and enter key
+            document.getElementById('sendButton').onclick = sendMessage;
+            document.getElementById('messageInput').onkeydown = function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            };
+
+            // Auto-resize textarea
+            document.getElementById('messageInput').oninput = autoResizeTextarea;
+        }
+
+        function autoResizeTextarea() {
+            const textarea = document.getElementById('messageInput');
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+        }
+
+        async function checkSystemStatus() {
+            try {
+                const response = await fetch('/api/health');
+                const data = await response.json();
+
+                if (data.status === 'healthy') {
+                    document.getElementById('systemStatus').className = 'status-indicator';
+                    document.getElementById('systemStatusText').textContent = translations[currentLanguage].systemReady;
+                    document.getElementById('guestCount').textContent = `${data.guestsLoaded || 5} guests`;
+                    document.getElementById('documentCount').textContent = `${data.documentsLoaded || 2} documents`;
+                    document.getElementById('ragMethod').textContent = data.ragMethod || 'Advanced RAG';
+                } else {
+                    document.getElementById('systemStatus').className = 'status-indicator error';
+                    document.getElementById('systemStatusText').textContent = translations[currentLanguage].error;
+                }
+            } catch (error) {
+                document.getElementById('systemStatus').className = 'status-indicator error';
+                document.getElementById('systemStatusText').textContent = translations[currentLanguage].error;
+            }
+        }
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            const t = translations[lang];
+
+            // Update UI elements
+            document.getElementById('appTitle').textContent = t.appTitle;
+            document.getElementById('messageInput').placeholder = t.placeholder;
+            document.getElementById('endSessionText').textContent = t.endSessionBtn;
+            document.getElementById('welcomeMessage').textContent = t.welcome;
+
+            // Update language buttons
+            document.getElementById('enBtn').classList.toggle('active', lang === 'en');
+            document.getElementById('plBtn').classList.toggle('active', lang === 'pl');
+
+            checkSystemStatus();
+        }
+
+        // Enhanced scroll management
+        function scrollToBottom(smooth = true) {
+            const messagesArea = document.getElementById('messagesArea');
+            if (smooth) {
+                messagesArea.scrollTo({
+                    top: messagesArea.scrollHeight,
+                    behavior: 'smooth'
+                });
+            } else {
+                messagesArea.scrollTop = messagesArea.scrollHeight;
+            }
+        }
+
+        function addMessage(content, isUser = false, isHtml = false, metadata = null) {
+            const messagesArea = document.getElementById('messagesArea');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+
+            const messageContent = document.createElement('div');
+            messageContent.className = 'message-content';
+
+            if (isHtml) {
+                messageContent.innerHTML = content;
+            } else {
+                messageContent.textContent = content;
+            }
+
+            messageDiv.appendChild(messageContent);
+
+            // Add metadata for bot messages
+            if (metadata && !isUser) {
+                const metaDiv = document.createElement('div');
+                metaDiv.className = 'message-meta';
+
+                let metaContent = '';
+                if (metadata.sources && metadata.sources.length > 0) {
+                    metaContent += `<span><i class="fas fa-book"></i> Sources: ${metadata.sources.join(', ')}</span>`;
+                }
+
+                let rightContent = '';
+                if (metadata.processingTime) {
+                    rightContent += `<span style="background: var(--bg-tertiary); padding: 2px 8px; border-radius: 4px; font-size: 11px;">${metadata.processingTime}ms</span>`;
+                }
+
+                metaDiv.innerHTML = `<div>${metaContent}</div><div>${rightContent}</div>`;
+                messageDiv.appendChild(metaDiv);
+            }
+
+            messagesArea.appendChild(messageDiv);
+
+            // Auto-scroll after adding message
+            setTimeout(() => scrollToBottom(true), 100);
+        }
+
+        function showTypingIndicator() {
+            if (isTyping) return;
+            isTyping = true;
+            document.getElementById('typingIndicator').classList.remove('hidden');
+            document.getElementById('sendButton').disabled = true;
+
+            // Auto-scroll when showing typing
+            setTimeout(() => scrollToBottom(true), 100);
+        }
+
+        function hideTypingIndicator() {
+            isTyping = false;
+            document.getElementById('typingIndicator').classList.add('hidden');
+            document.getElementById('sendButton').disabled = false;
+        }
+
+        async function lookupUser(contact) {
+            try {
+                const response = await fetch('/api/user-lookup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contact: contact })
+                });
+
+                const result = await response.json();
+                return result.success ? result.user : null;
+            } catch (error) {
+                console.error('User lookup error:', error);
+                return null;
+            }
+        }
+
+        function displayUserDetails(user) {
+            const t = translations[currentLanguage];
+            const initials = (user.name[0] + user.surname[0]).toUpperCase();
+
+            const sessionsRegistered = Object.entries(user.sessions)
+                .filter(([session, registered]) => registered)
+                .map(([session, _]) => session);
+
+            const userCardHtml = `
+                <div class="user-card">
+                    <div class="user-card-header">
+                        <div class="user-avatar">${initials}</div>
+                        <div class="user-info">
+                            <h3>${user.name} ${user.surname}</h3>
+                            <p>${user.company}</p>
+                        </div>
+                    </div>
+                    <div class="user-details-grid">
+                        <div class="detail-item">
+                            <div class="detail-label">Email</div>
+                            <div class="detail-value">${user.email}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Phone</div>
+                            <div class="detail-value">${user.phone}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Position</div>
+                            <div class="detail-value">${user.jobTitle}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Type</div>
+                            <div class="detail-value">${user.conferenceType}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">${t.badges}</div>
+                            <div class="detail-value">${user.badgePrinted ? t.badgePrinted : t.badgeNotPrinted}</div>
+                        </div>
+                        ${sessionsRegistered.length > 0 ? `
+                        <div class="detail-item" style="grid-column: 1 / -1;">
+                            <div class="detail-label">Registered Sessions</div>
+                            <div class="detail-value">${sessionsRegistered.join(', ')}</div>
+                        </div>
+                        ` : ''}
+                    </div>
+                    <p style="margin-bottom: 16px; color: var(--text-secondary);">${t.confirmQuestion}</p>
+                    <div class="confirmation-actions">
+                        <button class="action-btn btn-confirm" onclick="confirmDetails(true)">
+                            <i class="fas fa-check"></i> ${t.yes}
+                        </button>
+                        <button class="action-btn btn-reject" onclick="confirmDetails(false)">
+                            <i class="fas fa-edit"></i> ${t.no}
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            setTimeout(() => {
+                hideTypingIndicator();
+                addMessage(t.confirmDetails, false);
+                addMessage(userCardHtml, false, true);
+                document.getElementById('endSessionBtn').classList.add('visible');
+
+                // Ensure scrolling after user card
+                setTimeout(() => scrollToBottom(true), 300);
+            }, 1500);
+        }
+
+        async function confirmDetails(confirmed) {
+            const t = translations[currentLanguage];
+
+            if (confirmed) {
+                addMessage(t.yes, true);
+
+                // Update online status via Power Automate
+                if (currentUser) {
+                    try {
+                        console.log('📡 Updating online status in SharePoint...');
+                        const response = await fetch('/api/user-confirm', {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({
+                                email: currentUser.email,
+                                phone: currentUser.phone
+                            })
+                        });
+                        const result = await response.json();
+                        if (result.success) {
+                            console.log('✅ User marked as ONLINE in SharePoint!');
+                        } else {
+                            console.error('❌ Failed:', result.message);
+                        }
+                    } catch (error) {
+                        console.error('❌ Error:', error);
+                    }
+                }
+                setTimeout(() => {
+                    addMessage(t.detailsConfirmed, false);
+                    showEventOptions();
+                }, 1000);
+                chatState = 'confirmed';
+            } else {
+                addMessage(t.no, true);
+                setTimeout(() => {
+                    addMessage(t.detailsRejected, false);
+                }, 1000);
+                chatState = 'waiting_for_contact';
+                currentUser = null;
+                document.getElementById('endSessionBtn').classList.remove('visible');
+            }
+        }
+
+        function showEventOptions() {
+            const t = translations[currentLanguage];
+
+            const optionsHtml = `
+                <div class="options-container">
+                    <div class="option-card" onclick="showOption('agenda')">
+                        <div class="option-content">
+                            <div class="option-icon">
+                                <i class="fas fa-calendar-day"></i>
+                            </div>
+                            <div class="option-text">
+                                <div class="option-title">${t.optionAgenda}</div>
+                                <div class="option-desc">View today's complete schedule and session times</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="option-card" onclick="showOption('myplan')">
+                        <div class="option-content">
+                            <div class="option-icon">
+                                <i class="fas fa-user-clock"></i>
+                            </div>
+                            <div class="option-text">
+                                <div class="option-title">${t.optionMyPlan}</div>
+                                <div class="option-desc">Your personalized agenda and registered sessions</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="option-card" onclick="showOption('speakers')">
+                        <div class="option-content">
+                            <div class="option-icon">
+                                <i class="fas fa-microphone"></i>
+                            </div>
+                            <div class="option-text">
+                                <div class="option-title">${t.optionSpeakers}</div>
+                                <div class="option-desc">Speaker profiles and presentation topics</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="option-card" onclick="showOption('practical')">
+                        <div class="option-content">
+                            <div class="option-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="option-text">
+                                <div class="option-title">${t.optionPractical}</div>
+                                <div class="option-desc">Venue information, parking, and logistics</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="option-card" onclick="showOption('other')">
+                        <div class="option-content">
+                            <div class="option-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="option-text">
+                                <div class="option-title">${t.optionOther}</div>
+                                <div class="option-desc">Ask me anything using advanced AI</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="option-card end-session-card" onclick="endRegistration()">
+                        <div class="option-content">
+                            <div class="option-icon">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </div>
+                            <div class="option-text">
+                                <div class="option-title">${t.optionEndSession}</div>
+                                <div class="option-desc">Complete your session and reset for next user</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            setTimeout(() => {
+                addMessage(optionsHtml, false, true);
+                // Ensure scrolling after options appear
+                setTimeout(() => scrollToBottom(true), 300);
+            }, 500);
+        }
+
+        function showOption(option) {
+            const t = translations[currentLanguage];
+
+            switch(option) {
+                case 'agenda':
+                    addMessage(t.optionAgenda, true);
+                    setTimeout(() => {
+                        addMessage(detailedAgenda[currentLanguage], false);
+                        setTimeout(() => addMessage(t.howCanIHelp, false), 1000);
+                    }, 1000);
+                    break;
+
+                case 'myplan':
+                    addMessage(t.optionMyPlan, true);
+                    setTimeout(() => {
+                        if (currentUser) {
+                            const registeredSessions = Object.entries(currentUser.sessions)
+                                .filter(([session, registered]) => registered)
+                                .map(([session, _]) => session);
+
+                            if (registeredSessions.length > 0) {
+                                addMessage(`${t.mySchedule}\n• ${registeredSessions.join('\n• ')}`, false);
+                            } else {
+                                addMessage(t.mainConference, false);
+                            }
+                        }
+                        setTimeout(() => addMessage(t.howCanIHelp, false), 1000);
+                    }, 1000);
+                    break;
+
+                case 'speakers':
+                    addMessage(t.optionSpeakers, true);
+                    handleRAGQuestion("Who are the speakers today and what are their main topics?");
+                    break;
+
+                case 'practical':
+                    addMessage(t.optionPractical, true);
+                    setTimeout(() => {
+                        addMessage(practicalInfo[currentLanguage], false);
+                        setTimeout(() => addMessage(t.howCanIHelp, false), 1000);
+                    }, 1000);
+                    break;
+
+                case 'other':
+                    addMessage(t.optionOther, true);
+                    setTimeout(() => {
+                        addMessage("Feel free to ask me any questions! I use advanced RAG techniques to provide accurate, source-based answers about the event.", false);
+                    }, 1000);
+                    chatState = 'rag_mode';
+                    break;
+            }
+        }
+
+        async function handleRAGQuestion(question) {
+            showTypingIndicator();
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        question: question,
+                        language: currentLanguage,
+                        userContext: currentUser
+                    })
+                });
+
+                const result = await response.json();
+                hideTypingIndicator();
+
+                if (result.success) {
+                    addMessage(result.answer, false, false, {
+                        sources: result.sources,
+                        processingTime: result.processingTime,
+                        method: result.method,
+                        relevanceScore: result.relevanceScore
+                    });
+                } else {
+                    addMessage('I apologize, but I encountered an error processing your request. Please try rephrasing your question.', false);
+                }
+            } catch (error) {
+                hideTypingIndicator();
+                addMessage('I\'m currently unable to connect to the AI system. Please check your connection and try again.', false);
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+
+            if (message === '' || isTyping) return;
+
+            addMessage(message, true);
+            input.value = '';
+            input.style.height = 'auto';
+
+            if (chatState === 'waiting_for_contact') {
+                showTypingIndicator();
+
+                const isEmail = message.includes('@');
+                const isPhone = /^[0-9+\s-()]+$/.test(message.replace(/\s+/g, ''));
+
+                if (isEmail || isPhone) {
+                    const user = await lookupUser(message);
+                    if (user) {
+                        currentUser = user;
+                        displayUserDetails(user);
+                    } else {
+                        setTimeout(() => {
+                            hideTypingIndicator();
+                            addMessage(translations[currentLanguage].userNotFound, false);
+                        }, 1500);
+                    }
+                } else {
+                    hideTypingIndicator();
+                    handleRAGQuestion(message);
+                    chatState = 'rag_mode';
+                }
+            } else {
+                handleRAGQuestion(message);
+            }
+        }
+
+        function endRegistration() {
+            const t = translations[currentLanguage];
+            addMessage(t.endSessionConfirm, false);
+
+            setTimeout(() => {
+                resetSession();
+            }, 2000);
+        }
+
+        function resetSession() {
+            chatState = 'waiting_for_contact';
+            currentUser = null;
+            isTyping = false;
+
+            const messagesArea = document.getElementById('messagesArea');
+            messagesArea.innerHTML = '';
+
+            const welcomeMessage = document.createElement('div');
+            welcomeMessage.className = 'message bot-message';
+            welcomeMessage.innerHTML = `<div class="message-content" id="welcomeMessage">${translations[currentLanguage].welcome}</div>`;
+            messagesArea.appendChild(welcomeMessage);
+
+            document.getElementById('endSessionBtn').classList.remove('visible');
+            document.getElementById('messageInput').value = '';
+            document.getElementById('messageInput').style.height = 'auto';
+
+            // Reset scroll position
+            scrollToBottom(false);
+        }
+    </script>
+</body>
+</html>

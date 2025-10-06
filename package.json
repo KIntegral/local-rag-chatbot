@@ -1,0 +1,41 @@
+{
+  "name": "local-rag-chatbot",
+  "version": "1.0.0",
+  "description": "Event registration chatbot with local LLM RAG capabilities using CSV data and pre-uploaded PDFs",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js",
+    "setup": "npm run setup-python && npm run setup-ollama",
+    "setup-python": "python3 -m pip install -r requirements.txt",
+    "setup-ollama": "echo 'Install Ollama from https://ollama.ai/ and run: ollama pull llama3.2:3b && ollama pull mxbai-embed-large'",
+    "process-pdfs": "node backend/process-pdfs.js",
+    "test": "node backend/test.js"
+  },
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "csv-parser": "^3.2.0",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "fs-extra": "^11.1.1",
+    "node-fetch": "^2.7.0",
+    "path": "^0.12.7",
+    "pdf-parse": "^1.1.1",
+    "sqlite3": "^5.1.7",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "keywords": [
+    "chatbot",
+    "RAG",
+    "local-LLM",
+    "ollama",
+    "event-registration",
+    "csv-data"
+  ],
+  "author": "Event Organizer",
+  "license": "MIT"
+}
